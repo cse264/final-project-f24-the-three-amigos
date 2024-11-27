@@ -1,6 +1,6 @@
 
 export default async function Marketplace() {
-    const res = await fetch("http://jsonplaceholder.typicode.com/users") //Replace this with the url to fetch all of the products to browse
+    const res = await fetch("@/api/users") //Replace this with the url to fetch all of the products to browse
     const products = await res.json()
 
     return (
