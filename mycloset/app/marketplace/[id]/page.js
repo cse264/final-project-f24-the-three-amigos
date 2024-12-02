@@ -1,9 +1,15 @@
+import { Productpage } from "./marketplace/components/Product"
 
 export default async function Product({params}){
 
     const id = await params.id
 
     return(
-        <h1>Product {id}</h1>
+        <div>
+            <h1>Product {id}</h1>
+            <Productpage/>
+        </div>
+        
+        
     )
 }

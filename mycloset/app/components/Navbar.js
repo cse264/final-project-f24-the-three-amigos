@@ -14,23 +14,25 @@ export const Navbar = () => {
         alignItems: "center",
       }}
     >
-      {/* Brand Name */}
-      <div
+      {/* Brand Name (Link to Homepage) */}
+      <Link
+        href="/"
         style={{
           width: 332,
-          height: 120,
+          height: 134,
+          color: "black",
           fontSize: 48,
           fontFamily: "Climate Crisis, sans-serif",
           fontWeight: "400",
           wordWrap: "break-word",
           alignItems: "center",
           justifyContent: "center",
-          
-          
+          display: "flex",
+          textDecoration: "none",
         }}
       >
         myCloset
-      </div>
+      </Link>
 
       {/* Navigation Links */}
       <div
