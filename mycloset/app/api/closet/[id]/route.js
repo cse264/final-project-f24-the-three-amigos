@@ -33,12 +33,12 @@ export async function POST(req, { params }) {
   
     try {
       const body = await req.json();
-      const { item_name, item_type, color, size } = body;
+      const { item_name, item_type, image, price } = body;
   
       // Check if required fields are provided
-      if (!item_name || !item_type || !color || !size) {
+      if (!item_name || !item_type || !image || !price) {
         return new Response(
-          JSON.stringify({ error: 'item_name, item_type, color, and size are required' }),
+          JSON.stringify({ error: 'item_name, item_type, image, and price are required' }),
           { status: 400 }
         );
       }
@@ -50,9 +50,9 @@ export async function POST(req, { params }) {
   
       // Insert new item into closetItems table
       const result = await query(
-        `INSERT INTO closetItems (user_id, item_id, item_name, item_type, color, size) 
+        `INSERT INTO closetItems (user_id, item_id, item_name, item_type, image, price) 
          VALUES ($1, $2, $3, $4, $5, $6)`,
-        [userId, prevID+1, item_name, item_type, color, size]
+        [userId, prevID+1, item_name, item_type, image, price]
       );
   
       return new Response(JSON.stringify(result.rows[0]), {
