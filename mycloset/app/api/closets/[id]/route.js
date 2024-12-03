@@ -6,7 +6,7 @@ export async function GET(req, { params }) {
   try {
     // Query to get all closet items for the given user
     const result = await query(
-      `SELECT * FROM closetItems WHERE user_id = $1`,
+      `SELECT * FROM closet_items WHERE user_id = $1`,
       [userId]
     );
 
@@ -44,13 +44,13 @@ export async function POST(req, { params }) {
       }
 
       //Creating id
-      let idQS = `SELECT MAX(item_id) FROM closetItems`
+      let idQS = `SELECT MAX(item_id) FROM closet_items`
       const idResult = await query(idQS)
       const prevID = idResult.rows[0].max
   
       // Insert new item into closetItems table
       const result = await query(
-        `INSERT INTO closetItems (user_id, item_id, item_name, item_type, image, price) 
+        `INSERT INTO closet_items (user_id, item_id, item_name, item_type, image, price) 
          VALUES ($1, $2, $3, $4, $5, $6)`,
         [userId, prevID+1, item_name, item_type, image, price]
       );

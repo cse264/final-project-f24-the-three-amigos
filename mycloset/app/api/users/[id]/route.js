@@ -1,6 +1,6 @@
 import { query } from '../../db/connectPostgres.js';
 
-export const usersTable = "myClosetUsers"
+export const usersTable = "my_closet_users"
 
 export async function GET(req, { params }) {
     const { id } = params;
@@ -43,7 +43,7 @@ export async function POST(req) {
         const prevID = idResult.rows[0].max
 
         //Adding user
-        const result = await query(`INSERT INTO ${usersTable} (username, user_id) VALUES ($1, $2)`,[username, prevID+1])
+        const result = await query(`INSERT INTO ${usersTable} (user_id, usernam) VALUES ($1, $2)`,[prevID+1, username])
     
         return new Response(JSON.stringify(result.rows[0]), {
             status: 201,
