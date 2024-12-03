@@ -1,42 +1,41 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import Product from './components/Product'; // Import the Product component
 
 export default function Marketplace() {
-  const [shirt, setShirt] = useState(null);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    const fetchShirt = async () => {
+    const fetchProducts = async () => {
       try {
-        const res = await fetch('https://dummyjson.com/products/category/mens-shirts');
-        const data = await res.json();
-        // Assuming we want to present the specific product with id 83
-        const blueBlackCheckShirt = data.products.find(product => product.id === 83);
-        setShirt(blueBlackCheckShirt);
+        const categories = ['mens-shoes', 'mens-shirts'];
+        const promises = categories.map(category => fetch(`https://dummyjson.com/products/category/${category}`).then(res => res.json()));
+        const results = await Promise.all(promises);
+        const allProducts = results.flatMap(result => result.products);
+        setProducts(allProducts);
       } catch (error) {
         console.log(error);
       }
     };
 
-    fetchShirt();
+    fetchProducts();
   }, []);
 
   return (
     <div>
       <h1>Clothing Products</h1>
-      {shirt && (
-        <div key={shirt.id}>
-          <h2>{shirt.title}</h2>
-          <p>{shirt.description}</p>
-          <p><strong>Price:</strong> ${shirt.price}</p>
-          <p><strong>Brand:</strong> {shirt.brand}</p>
-          <div>
-            {shirt.images.map((image, index) => (
-              <img key={index} src={image} alt={shirt.title} style={{width: '200px', height: 'auto', marginRight: '10px'}} />
-            ))}
-          </div>
-        </div>
-      )}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+        {products.map((product) => (
+          <Product
+            key={product.id}
+            title={product.title}
+            brand={product.brand}
+            price={product.price}
+            images={product.images}
+          />
+        ))}
+      </div>
     </div>
   );
 }
