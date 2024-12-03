@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import Product from './components/Product'; // Import the Product component
+import Product from './components/Product'; // Make sure to import the Product component
 
 export default function Marketplace() {
   const [products, setProducts] = useState([]);
@@ -22,19 +22,32 @@ export default function Marketplace() {
     fetchProducts();
   }, []);
 
+  const mapCategoryToType = (category) => {
+    switch (category) {
+      case 'mens-shoes':
+        return 'Shoes';
+      case 'mens-shirts':
+        return 'Tops';
+      default:
+        return category;
+    }
+  };
+
   return (
     <div>
       <h1>Clothing Products</h1>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-        {products.map((product) => (
-          <Product
-            key={product.id}
-            title={product.title}
-            brand={product.brand}
-            price={product.price}
-            images={product.images}
-          />
-        ))}
+      <div style={{ padding: '20px 30px 0' }}> {/* Padding: 20px top, 30px left and right */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+          {products.map((product) => (
+            <Product
+              key={product.id}
+              title={product.title}
+              type={mapCategoryToType(product.category)}
+              price={product.price}
+              images={product.images}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
