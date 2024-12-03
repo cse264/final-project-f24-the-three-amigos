@@ -1,113 +1,72 @@
 import Link from "next/link";
+import React from "react";
+import { IconButton } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle"; // Import User Icon
 
 export const Navbar = () => {
   return (
-    <nav
+    <div
       style={{
         width: "100%",
-        height: "100%",
-        padding: "0 25px",
+        height: "80px",
         background: "#FEFAE0",
+        borderRadius: "8px",
         boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
         display: "flex",
-        justifyContent: "space-between",
         alignItems: "center",
+        justifyContent: "space-between",
+        padding: "0 80px",
       }}
     >
-      {/* Brand Name (Link to Homepage) */}
+      {/* Brand Name as a Link */}
       <Link
         href="/"
         style={{
-          width: 332,
-          height: 134,
-          color: "black",
-          fontSize: 48,
-          fontFamily: "Climate Crisis, sans-serif",
+          fontSize: "24px",
+          fontFamily: "Comfortaa",
           fontWeight: "400",
-          wordWrap: "break-word",
-          alignItems: "center",
-          justifyContent: "center",
-          display: "flex",
-          textDecoration: "none",
+          color: "black",
+          textDecoration: "none", // No underline
         }}
       >
-        myCloset
+        My Closet
       </Link>
 
-      {/* Navigation Links */}
+      {/* Icons Section */}
       <div
         style={{
-          height: 57,
           display: "flex",
-          justifyContent: "flex-start",
+          gap: "8px",
+          justifyContent: "center",
           alignItems: "center",
-          gap: 40,
         }}
       >
-        <div style={{ width: 336, height: 57, position: "relative" }}>
-          <div
-            style={{
-              width: 336,
-              height: 57,
-              background: "#E9EDC9",
-              boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-              borderRadius: 30,
-              position: "absolute",
-            }}
-          />
-          <Link
-            href="/marketplace"
-            style={{
-              width: 314,
-              height: 57,
-              position: "absolute",
-              textAlign: "center",
-              color: "black",
-              fontSize: 32,
-              fontFamily: "Climate Crisis, sans-serif",
-              fontWeight: "400",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              textDecoration: "none",
-            }}
-          >
-            Marketplace
-          </Link>
-        </div>
+        {/* Search Icon */}
+        <Link href="/search">
+          <IconButton>
+            <SearchIcon style={{ color: "black" }} />
+          </IconButton>
+        </Link>
 
-        <div style={{ width: 336, height: 57, position: "relative" }}>
-          <div
-            style={{
-              width: 336,
-              height: 57,
-              background: "#E9EDC9",
-              boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-              borderRadius: 30,
-              position: "absolute",
-            }}
-          />
-          <Link
-            href="/closet"
-            style={{
-              width: 314,
-              height: 57,
-              position: "absolute",
-              textAlign: "center",
-              color: "black",
-              fontSize: 32,
-              fontFamily: "Climate Crisis, sans-serif",
-              fontWeight: "400",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              textDecoration: "none",
-            }}
-          >
-            Closet
-          </Link>
-        </div>
+        {/* Marketplace Icon */}
+        <Link href="/marketplace">
+          <IconButton>
+            <ShoppingBagIcon style={{ color: "black" }} />
+          </IconButton>
+        </Link>
+
+        {/* User Icon */}
+        <Link href="/closet">
+          <IconButton>
+            <AccountCircleIcon style={{ color: "black" }} />
+          </IconButton>
+        </Link>
       </div>
-    </nav>
+    </div>
   );
 };
+
+
+
