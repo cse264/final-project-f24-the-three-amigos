@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { Signin } from "./components/Signin"
+import { Homebody } from "./components/Homebody"
 
 export default function Home() {
   return (
     <div>
-      <h1>Welcome to myCloset</h1>
-      <h2>Log In Place holder</h2>
+      <Homebody/>
       <Signin/>
     </div>
   );
