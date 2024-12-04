@@ -1,11 +1,11 @@
 import { query } from '../../../../db/connectPostgres.js';
 
 export async function GET(req, { params }) {
-  const { userId } = await params
+  const { userId } = await params.id
 
   try {
     // Query to get a random top from the closetItems table for the given user
-    const result = await query(`SELECT * FROM closetItems WHERE user_id = $1 AND item_type = 'Top' ORDER BY RANDOM() LIMIT 1`,[userId])
+    const result = await query(`SELECT * FROM closetItems WHERE user_id = ${userId} AND item_type = 'Top' ORDER BY RANDOM() LIMIT 1`)
 
     if (result.rows.length === 0) {
       return new Response(JSON.stringify({ message: 'No tops found for this user' }), {

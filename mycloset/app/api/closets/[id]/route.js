@@ -1,14 +1,12 @@
 import { query } from '../../../db/connectPostgres.js';
 
 export async function GET(req, { params }) {
-  const { userId } = await params;
+  const { userId } =  await params.id;
 
   try {
     // Query to get all closet items for the given user
     const result = await query(
-      `SELECT * FROM closet_items WHERE user_id = $1`,
-      [userId]
-    );
+      `SELECT * FROM closet_items WHERE user_id = ${userId}`);
 
     if (result.rows.length === 0) {
       return new Response(JSON.stringify({ message: 'No items found for this user' }), {

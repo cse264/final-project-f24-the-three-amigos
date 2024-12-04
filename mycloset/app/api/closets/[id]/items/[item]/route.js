@@ -7,8 +7,7 @@ export async function GET(req, { params }) {
   try {
     // Query to get all closet items for the given user
     const result = await query(
-      `SELECT * FROM closetItems WHERE user_id = $1 AND item_id = $2`,
-      [userId, itemId]
+      `SELECT * FROM closetItems WHERE user_id = ${userId} AND item_id = ${itemId}`
     );
 
     if (result.rows.length === 0) {

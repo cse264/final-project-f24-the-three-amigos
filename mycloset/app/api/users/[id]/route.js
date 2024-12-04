@@ -3,10 +3,10 @@ import { query } from '../../../db/connectPostgres.js';
 export const usersTable = "my_closet_users"
 
 export async function GET(req, { params }) {
-    const { id } = await params;
+    const  id  = params.id
   
     try {
-      const result = await query(`SELECT * FROM ${usersTable} WHERE user_id = $1`, [id])
+      const result = await query(`SELECT * FROM ${usersTable} WHERE user_id = ${id}`)
   
       if (result.rows.length === 0) {
         return new Response(JSON.stringify({ error: 'User not found' }), {
