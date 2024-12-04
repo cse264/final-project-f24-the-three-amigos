@@ -1,7 +1,6 @@
 import Link from "next/link";
 import React from "react";
 import { IconButton } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"; // Import User Icon
 
