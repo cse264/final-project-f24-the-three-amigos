@@ -1,9 +1,9 @@
-import { query } from '../../db/connectPostgres.js';
+import { query } from '../../../db/connectPostgres.js';
 
 export const usersTable = "my_closet_users"
 
 export async function GET(req, { params }) {
-    const { id } = params;
+    const { id } = await params;
   
     try {
       const result = await query(`SELECT * FROM ${usersTable} WHERE user_id = $1`, [id])

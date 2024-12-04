@@ -1,7 +1,7 @@
-import { query } from '../../../db/connectPostgres.js';
+import { query } from '../../../../db/connectPostgres.js';
 
 export async function GET(req, { params }) {
-  const { userId } = params
+  const { userId } = await params
 
   try {
     // Query to get a random top from the closetItems table for the given user

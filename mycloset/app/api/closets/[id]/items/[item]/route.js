@@ -1,8 +1,8 @@
-import { query } from '../../db/connectPostgres.js';
+import { query } from '../../../../../db/connectPostgres.js';
 
 export async function GET(req, { params }) {
-  const { userId } = params.id;
-  const { itemId } = params.item;
+  const { userId } = await params.id;
+  const { itemId } = await params.item;
 
   try {
     // Query to get all closet items for the given user
