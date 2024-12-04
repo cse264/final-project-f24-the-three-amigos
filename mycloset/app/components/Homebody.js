@@ -11,7 +11,7 @@ export const Homebody = () => {
       style={{
         width: "100%",
         height: "100vh",
-        backgroundImage: "url(https://www.google.com/imgres?q=My%20closet%20background%201440%20x%20890&imgurl=https%3A%2F%2Fpng.pngtree.com%2Fthumb_back%2Ffh260%2Fbackground%2F20230611%2Fpngtree-elegant-walk-in-closets-image_2975332.jpg&imgrefurl=https%3A%2F%2Fpngtree.com%2Ffree-backgrounds-photos%2Fcloset&docid=6c4C4YfG552KdM&tbnid=WWNa-K-v9pVboM&vet=12ahUKEwjs_cLbwoqKAxXCFFkFHfU5MyEQM3oECBQQAA..i&w=640&h=359&hcb=2&ved=2ahUKEwjs_cLbwoqKAxXCFFkFHfU5MyEQM3oECBQQAA)", // Update this with a new image URL
+        backgroundImage: "url('/my-closet-background.jpg')", // Update this to the correct path
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -37,7 +37,7 @@ export const Homebody = () => {
         {/* Title */}
         <div
           style={{
-            fontFamily: "Climate Crisis",
+            fontFamily: "'Climate Crisis', cursive",
             fontSize: "64px",
             color: "black",
           }}
