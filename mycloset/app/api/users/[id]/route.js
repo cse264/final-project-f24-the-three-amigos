@@ -1,20 +1,23 @@
-import { query } from '../../../db/connectPostgres.js';
+import { query } from '../../../db/connectMySql.js';
 
 export const usersTable = "my_closet_users"
 
-export async function GET(req, { params }) {
-    const  id  = params.id
-  
+export async function GET(_req, {params}) {
+    const val =  await params
+    const id = val.id
+
     try {
-      const result = await query(`SELECT * FROM ${usersTable} WHERE user_id = ${id}`)
+      const qs = `SELECT * FROM ${usersTable} WHERE user_id = ${parseInt(id)}`
+      console.log(qs)
+      const result = await query(qs)
   
-      if (result.rows.length === 0) {
+      if (!result) {
         return new Response(JSON.stringify({ error: 'User not found' }), {
           status: 404,
         })
       }
   
-      return new Response(JSON.stringify(result.rows[0]), {
+      return new Response(JSON.stringify(result), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
       })
@@ -29,7 +32,7 @@ export async function GET(req, { params }) {
 export async function POST(req) {
     try {
       const body = await req.json()
-      const { username } = body
+      const username = body.username
   
       if (!username) {
         return new Response(
@@ -38,14 +41,17 @@ export async function POST(req) {
         )
       } else {
         //Creating id
-        let idQS = `SELECT MAX(user_id) FROM ${usersTable}`
+        let idQS = `SELECT MAX(user_id) AS maxUser FROM ${usersTable}`
         const idResult = await query(idQS)
-        const prevID = idResult.rows[0].max
+        const newId = idResult[0].maxUser + 1
+
 
         //Adding user
-        const result = await query(`INSERT INTO ${usersTable} (user_id, usernam) VALUES ($1, $2)`,[prevID+1, username])
+        const qs = `INSERT INTO ${usersTable} (user_id, username) VALUES (${newId}, '${username}')`
+        console.log(qs)
+        const result = await query(qs)
     
-        return new Response(JSON.stringify(result.rows[0]), {
+        return new Response(JSON.stringify(result.rows), {
             status: 201,
             headers: { 'Content-Type': 'application/json' },
         })

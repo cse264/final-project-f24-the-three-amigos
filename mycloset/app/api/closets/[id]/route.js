@@ -1,20 +1,21 @@
-import { query } from '../../../db/connectPostgres.js';
+import { query } from '../../../db/connectMySql.js';
 
 export async function GET(req, { params }) {
-  const { userId } =  await params.id;
+  const val =  await params
+  const id = val.id
 
   try {
     // Query to get all closet items for the given user
     const result = await query(
-      `SELECT * FROM closet_items WHERE user_id = ${userId}`);
+      `SELECT * FROM closet_items WHERE user_id = ${parseInt(id)}`);
 
-    if (result.rows.length === 0) {
+    if (!result) {
       return new Response(JSON.stringify({ message: 'No items found for this user' }), {
         status: 404,
       });
     }
 
-    return new Response(JSON.stringify(result.rows), {
+    return new Response(JSON.stringify(result), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
@@ -27,11 +28,15 @@ export async function GET(req, { params }) {
 }
 
 export async function POST(req, { params }) {
-    const { userId } = params;
+    const val =  await params
+    const id = val.id
   
     try {
-      const body = await req.json();
-      const { item_name, item_type, image, price } = body;
+      const body = await req.json()
+      const item_name = body.item_name
+      const item_type = body.item_type
+      const image = body.image
+      const price = body.price
   
       // Check if required fields are provided
       if (!item_name || !item_type || !image || !price) {
@@ -42,18 +47,16 @@ export async function POST(req, { params }) {
       }
 
       //Creating id
-      let idQS = `SELECT MAX(item_id) FROM closet_items`
+      let idQS = `SELECT MAX(item_id) AS maxUser FROM closet_items`
       const idResult = await query(idQS)
-      const prevID = idResult.rows[0].max
+      const newId = idResult[0].maxUser + 1
   
       // Insert new item into closetItems table
       const result = await query(
         `INSERT INTO closet_items (user_id, item_id, item_name, item_type, image, price) 
-         VALUES ($1, $2, $3, $4, $5, $6)`,
-        [userId, prevID+1, item_name, item_type, image, price]
-      );
+         VALUES (${parseInt(id)}, ${newId}, '${item_name}', '${item_type}', '${image}', ${price})`);
   
-      return new Response(JSON.stringify(result.rows[0]), {
+      return new Response(JSON.stringify(result.rows), {
         status: 201,
         headers: { 'Content-Type': 'application/json' },
       });
