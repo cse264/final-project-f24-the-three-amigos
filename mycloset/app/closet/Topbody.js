@@ -1,187 +1,173 @@
 "use client";
 
-import React from "react";
-import Link from "next/link"; // Import the Link component for navigation
-
-// Import Google Fonts
-const googleFontsLink = "https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
 
 export const Topbody = () => {
+  const [outfit, setOutfit] = useState({
+    top: null,
+    bottom: null,
+    shoes: null,
+  });
+
   const containerStyle = {
     width: "100%",
-    height: "100%",
-    backgroundImage: "url('/new-closetbackground.png')",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
+    height: "100vh",
+    backgroundColor: "#FEFAE0",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "flex-start",
     padding: "40px",
-    fontFamily: "'Poppins', sans-serif", // Use modern font
-    color: "#333", // Elegant color for text
+    fontFamily: "'Poppins', sans-serif",
+    color: "#333",
   };
 
   const headerStyle = {
     textAlign: "center",
-    color: "#fff", // White text for contrast
+    color: "#333",
     marginBottom: "40px",
     fontFamily: "'Poppins', sans-serif",
-    textShadow: "0 4px 8px rgba(0, 0, 0, 0.6)", // Glow effect
+    textShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
   };
 
   const titleStyle = {
     fontSize: "52px",
     fontWeight: "600",
     margin: "0",
-    color: "#FEFAE0", // Soft cream color
-    textShadow: "0px 4px 8px rgba(0, 0, 0, 0.4)",
-  };
-
-  const descriptionStyle = {
-    fontSize: "18px",
-    fontWeight: "400",
-    color: "#F5F5F5", // Slightly muted white
-    margin: "0",
-    textShadow: "0 2px 4px rgba(0, 0, 0, 0.6)",
+    color: "#6B705C",
   };
 
   const gridStyle = {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-    gap: "30px",
-    width: "100%",
-    marginTop: "40px",
-    padding: "0 20px",
+    display: "flex",
+    justifyContent: "center",
+    gap: "20px",
+    marginTop: "20px",
   };
 
-  const cardContainerStyle = {
-    position: "relative",
-    overflow: "hidden",
-    borderRadius: "12px",
-    transition: "transform 0.3s ease, box-shadow 0.3s ease",
-    cursor: "pointer",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-  };
-
-  const buttonBackgroundStyle = {
-    position: "absolute",
-    top: "0",
-    left: "0",
-    width: "100%",
-    height: "100%",
+  const buttonStyle = {
     backgroundColor: "#CCD5AE",
-    transform: "scale(1)",
-    transition: "transform 0.5s ease",
-    zIndex: "0",
-  };
-
-  const buttonContentStyle = {
-    position: "relative",
-    zIndex: "1",
-    color: "#333",
-    fontSize: "20px",
+    border: "none",
+    borderRadius: "8px",
+    padding: "12px 24px",
+    fontSize: "16px",
     fontWeight: "600",
-    padding: "20px",
-    textAlign: "center",
-    fontFamily: "'Poppins', sans-serif",
-    textTransform: "uppercase",
+    cursor: "pointer",
+    transition: "all 0.3s ease",
+    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+    color: "#333",
   };
 
   const outfitFrameStyle = {
+    display: "grid",
+    gridTemplateColumns: "repeat(3, 1fr)",
+    gap: "20px",
     marginTop: "40px",
-    width: "50%", // Reduced width
-    height: "500px", // Increased height for a portrait look
-    border: "2px solid #fff",
+    padding: "20px",
+    backgroundColor: "#FFFFFF",
     borderRadius: "12px",
-    backgroundColor: "#FEFAE0",
+    boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.2)",
+  };
+
+  const frameStyle = {
+    width: "200px",
+    height: "300px",
+    backgroundColor: "#fff",
+    borderRadius: "8px",
+    overflow: "hidden",
+    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    overflow: "hidden",
-    boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)",
     textAlign: "center",
-    fontFamily: "'Poppins', sans-serif",
-    color: "#333",
   };
 
-  const placeholderImageStyle = {
+  const imageStyle = {
     width: "100%",
     height: "100%",
     objectFit: "cover",
   };
 
-  const footerStyle = {
-    marginTop: "40px",
-    width: "100%",
-    textAlign: "center",
-    padding: "20px 0",
-    background: "#FEFAE0",
-    borderTop: "1px solid #ddd",
-    fontFamily: "'Poppins', sans-serif",
-    color: "#333",
+  const fetchRandomItem = async (category) => {
+    try {
+      // Updated API calls for demo purposes
+      const apiEndpoints = {
+        tops: "https://fakestoreapi.com/products/category/men's clothing",
+        bottoms: "https://fakestoreapi.com/products/category/women's clothing",
+        shoes: "https://fakestoreapi.com/products/category/jewelery",
+      };
+
+      const res = await fetch(apiEndpoints[category]);
+      const data = await res.json();
+      const randomItem = data[Math.floor(Math.random() * data.length)];
+      return randomItem ? randomItem.image : null; // Use image field
+    } catch (error) {
+      console.error(`Error fetching ${category}:`, error);
+      return null;
+    }
   };
 
-  const handleMouseOver = (e) => {
-    const background = e.currentTarget.querySelector(".button-background");
-    background.style.transform = "scale(1.2)";
+  const fetchOutfit = async () => {
+    const top = await fetchRandomItem("tops");
+    const bottom = await fetchRandomItem("bottoms");
+    const shoes = await fetchRandomItem("shoes");
+
+    setOutfit({ top, bottom, shoes });
   };
 
-  const handleMouseOut = (e) => {
-    const background = e.currentTarget.querySelector(".button-background");
-    background.style.transform = "scale(1)";
-  };
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      fetchOutfit();
+    }
+  }, []);
 
   return (
     <>
-      {/* Include Google Fonts */}
-      <link href={googleFontsLink} rel="stylesheet" />
-
       <div style={containerStyle}>
         {/* Header Section */}
         <header style={headerStyle}>
           <h1 style={titleStyle}>Welcome to Your Closet</h1>
-          <p style={descriptionStyle}>Organize and showcase your wardrobe in style.</p>
         </header>
 
-        {/* Button Grid Section */}
+        {/* Buttons Section */}
         <div style={gridStyle}>
-          {/* Tops */}
           <Link href="/tops">
-            <div
-              style={cardContainerStyle}
-              onMouseOver={handleMouseOver}
-              onMouseOut={handleMouseOut}
-            >
-              <div className="button-background" style={buttonBackgroundStyle}></div>
-              <div style={buttonContentStyle}>Tops</div>
-            </div>
+            <button style={buttonStyle}>Tops</button>
           </Link>
-
-          {/* Bottoms */}
           <Link href="/bottoms">
-            <div
-              style={cardContainerStyle}
-              onMouseOver={handleMouseOver}
-              onMouseOut={handleMouseOut}
-            >
-              <div className="button-background" style={buttonBackgroundStyle}></div>
-              <div style={buttonContentStyle}>Bottoms</div>
-            </div>
+            <button style={buttonStyle}>Bottoms</button>
           </Link>
-
-          {/* Shoes */}
           <Link href="/shoes">
-            <div
-              style={cardContainerStyle}
-              onMouseOver={handleMouseOver}
-              onMouseOut={handleMouseOut}
-            >
-              <div className="button-background" style={buttonBackgroundStyle}></div>
-              <div style={buttonContentStyle}>Shoes</div>
-            </div>
+            <button style={buttonStyle}>Shoes</button>
           </Link>
+          <button style={buttonStyle} onClick={fetchOutfit}>
+            Randomize
+          </button>
+        </div>
+
+        {/* Outfit Display Section */}
+        <div style={outfitFrameStyle}>
+          <div style={frameStyle}>
+            {outfit.top ? (
+              <img src={outfit.top} alt="Top" style={imageStyle} />
+            ) : (
+              <p>Loading Top...</p>
+            )}
+          </div>
+          <div style={frameStyle}>
+            {outfit.bottom ? (
+              <img src={outfit.bottom} alt="Bottom" style={imageStyle} />
+            ) : (
+              <p>Loading Bottom...</p>
+            )}
+          </div>
+          <div style={frameStyle}>
+            {outfit.shoes ? (
+              <img src={outfit.shoes} alt="Shoes" style={imageStyle} />
+            ) : (
+              <p>Loading Shoes...</p>
+            )}
+          </div>
         </div>
       </div>
     </>
