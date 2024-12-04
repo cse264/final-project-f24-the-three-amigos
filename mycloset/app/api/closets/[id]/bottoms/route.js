@@ -1,4 +1,4 @@
-import { query } from '../../../../db/connectMySql.js';
+import { query } from '../../../../db/connectMysql.js';
 
 export async function GET(req, { params }) {
   const val =  await params

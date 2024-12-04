@@ -1,4 +1,4 @@
-import { query } from '../../../db/connectMySql.js';
+import { query } from '../../../db/connectMysql.js';
 
 export const usersTable = "my_closet_users"
 
@@ -33,10 +33,11 @@ export async function POST(req) {
     try {
       const body = await req.json()
       const username = body.username
+      const user_type = body.user_type
   
-      if (!username) {
+      if (!username || user_type) {
         return new Response(
-          JSON.stringify({ error: 'Username required' }),
+          JSON.stringify({ error: 'Username and type required' }),
           { status: 400 }
         )
       } else {
@@ -47,7 +48,7 @@ export async function POST(req) {
 
 
         //Adding user
-        const qs = `INSERT INTO ${usersTable} (user_id, username) VALUES (${newId}, '${username}')`
+        const qs = `INSERT INTO ${usersTable} (user_id, username, user_type) VALUES (${newId}, '${username}', '${user_type}')`
         console.log(qs)
         const result = await query(qs)
     
