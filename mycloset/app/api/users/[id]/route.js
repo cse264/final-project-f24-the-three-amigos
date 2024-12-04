@@ -35,7 +35,7 @@ export async function POST(req) {
       const username = body.username
       const user_type = body.user_type
   
-      if (!username || user_type) {
+      if (!username || !user_type) {
         return new Response(
           JSON.stringify({ error: 'Username and type required' }),
           { status: 400 }
