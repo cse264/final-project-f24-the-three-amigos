@@ -1,124 +1,101 @@
 "use client";
 
-import React from "react";
-import { Button } from "@mui/material";
-import LoginIcon from "@mui/icons-material/Login";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import React, { useState } from "react";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Link from "next/link";
 
 export const Homebody = () => {
+  const [username, setUsername] = useState("");
+
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+  };
+
+  // const handleRegister = async () => {
+  //   try {
+  //     const response = await fetch("/api/users/1", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ username }),
+  //     });
+
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       console.log("User registered:", data);
+  //       // Use Link component for navigation to marketplace
+  //       document.getElementById("marketplace-link").click();
+  //     } else {
+  //       console.error("Failed to register user");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //   }
+  // };
+
   return (
     <div
       style={{
         width: "100%",
-        height: "100vh",
-        backgroundImage: "url('/my-closet-background.jpg')", // Update this to the correct path
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        display: "flex",
+        height: "100%",
+        paddingTop: 28,
+        paddingBottom: 28,
+        background: "#CCD5AE",
+        borderRadius: 10,
+        overflow: "hidden",
         flexDirection: "column",
-        justifyContent: "space-between",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        gap: 25,
+        display: "inline-flex",
       }}
     >
-      {/* Header Section */}
       <div
         style={{
-          padding: "20px 36px",
-          backgroundColor: "rgba(250, 237, 205, 0.8)", // Semi-transparent overlay
-          borderRadius: 30,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          gap: 20,
-          margin: "40px",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-        }}
-      >
-        {/* Title */}
-        <div
-          style={{
-            fontFamily: "'Climate Crisis', cursive",
-            fontSize: "64px",
-            color: "black",
-          }}
-        >
-          <div>my</div>
-          <div>Closet</div>
-        </div>
-
-        {/* Buttons */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 15 }}>
-          <Button
-            variant="contained"
-            startIcon={<LoginIcon />}
-            style={{
-              backgroundColor: "#CCD5AE",
-              color: "black",
-              fontFamily: "Inter, sans-serif",
-              fontSize: 18,
-              fontWeight: "600",
-              textTransform: "none",
-              borderRadius: 30,
-              padding: "10px 20px",
-            }}
-            onClick={() => console.log("Sign In clicked")}
-          >
-            Sign In
-          </Button>
-
-          <Button
-            variant="contained"
-            startIcon={<CloudUploadIcon />}
-            style={{
-              backgroundColor: "#CCD5AE",
-              color: "black",
-              fontFamily: "Inter, sans-serif",
-              fontSize: 18,
-              fontWeight: "600",
-              textTransform: "none",
-              borderRadius: 30,
-              padding: "10px 20px",
-            }}
-            onClick={() => console.log("Upload clicked")}
-          >
-            Upload
-          </Button>
-        </div>
-      </div>
-
-      {/* About Us Section */}
-      <div
-        style={{
-          backgroundColor: "#FEFAE0",
-          padding: "40px 20px",
+          width: 592,
+          height: 71,
           textAlign: "center",
+          color: "black",
+          fontSize: 32,
+          fontFamily: "Poppins",
+          fontWeight: "400",
+          wordWrap: "break-word",
         }}
       >
-        <h2
-          style={{
-            fontFamily: "Comfortaa, sans-serif",
-            fontWeight: "700",
-            color: "#333",
-          }}
-        >
-          About Us
-        </h2>
-        <p
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "16px",
-            color: "#555",
-            maxWidth: "800px",
-            margin: "0 auto",
-            lineHeight: "1.5",
-          }}
-        >
-          Welcome to My Closet, the perfect place to organize and showcase your
-          wardrobe. Whether you're managing outfits, tracking styles, or sharing
-          your favorite looks, our intuitive platform makes it effortless. Your
-          closet, reimagined.
-        </p>
+        Sign Up
       </div>
+      <div
+        style={{
+          width: 331,
+          height: 40,
+          color: "black",
+          fontSize: 24,
+          fontFamily: "Poppins",
+          fontWeight: "400",
+          wordWrap: "break-word",
+        }}
+      >
+        Enter Username:
+      </div>
+      <TextField
+        label="Username"
+        variant="outlined"
+        fullWidth
+        value={username}
+        onChange={handleUsernameChange}
+      />
+      {/* <Button
+        variant="contained"
+        color="primary"
+        onClick={handleRegister}
+        style={{ marginTop: 20 }}
+      >
+        Enter
+      </Button> */}
     </div>
   );
 };
+
+export default Homebody;
