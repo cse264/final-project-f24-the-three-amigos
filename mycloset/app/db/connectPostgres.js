@@ -1,8 +1,7 @@
 import pg from 'pg'
+import dotenv from 'dotenv'
 const { Client } = pg
-import dotenv from 'dotenv';
-dotenv.config();
- 
+dotenv.config()
 const client = new Client({
   host: process.env.POSTGRES_HOST,
   port: Number(process.env.POSTGRES_PORT),
