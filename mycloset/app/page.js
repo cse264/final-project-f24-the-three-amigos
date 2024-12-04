@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div>
       <Homebody/>
-      <Signin/>
+      <Link href="/marketplace">Log In</Link>
     </div>
   );
 }

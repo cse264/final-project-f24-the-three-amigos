@@ -86,7 +86,6 @@ export const Homebody = () => {
         value={username}
         onChange={handleUsernameChange}
       />
-      <Link href="/marketplace">Log In</Link>
       {/* <Button
         variant="contained"
         color="primary"
