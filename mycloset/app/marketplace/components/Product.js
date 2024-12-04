@@ -1,22 +1,24 @@
 import React from 'react';
 
 const Product = ({ id, title, type, price, images }) => {
-  const addToCart = async () => {
+  const addToCloset = async () => {
     try {
-      const response = await fetch('https://dummyjson.com/carts/add', {
+      const response = await fetch(`/api/closet/${userId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId: 1, // Replace with actual user ID if applicable
-          products: [{ id, quantity: 1 }],
+          item_name: title,
+          item_type: type,
+          image: images[0], // Assuming you're using the first image
+          price: price,
         }),
       });
       const data = await response.json();
-      console.log('Added to cart:', data);
+      console.log('Added to closet:', data);
     } catch (error) {
-      console.error('Error adding to cart:', error);
+      console.error('Error adding to closet:', error);
     }
   };
 
@@ -30,8 +32,8 @@ const Product = ({ id, title, type, price, images }) => {
         <div style={{ alignSelf: 'stretch', height: 21, color: 'black', fontSize: 16, fontFamily: 'Poppins', fontWeight: '400', wordWrap: 'break-word' }}>{type}</div>
         <div style={{ alignSelf: 'stretch', height: 21, color: 'black', fontSize: 16, fontFamily: 'Poppins', fontWeight: '400', wordWrap: 'break-word' }}>{`$${price}`}</div>
         <div style={{ width: 218, height: 53, background: '#CCD5AE', borderRadius: 8, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', display: 'inline-flex' }}>
-          <button onClick={addToCart} style={{ width: '100%', height: '100%', background: 'none', border: 'none', textAlign: 'center', color: 'black', fontSize: 16, fontFamily: 'Poppins', fontWeight: '400', cursor: 'pointer' }}>
-            Add to Cart
+          <button onClick={addToCloset} style={{ width: '100%', height: '100%', background: 'none', border: 'none', textAlign: 'center', color: 'black', fontSize: 16, fontFamily: 'Poppins', fontWeight: '400', cursor: 'pointer' }}>
+            Add to Closet
           </button>
         </div>
       </div>

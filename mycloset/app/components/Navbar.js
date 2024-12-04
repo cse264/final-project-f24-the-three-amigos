@@ -43,12 +43,7 @@ export const Navbar = () => {
           alignItems: "center",
         }}
       >
-        {/* Search Icon */}
-        <Link href="/search">
-          <IconButton>
-            <SearchIcon style={{ color: "black" }} />
-          </IconButton>
-        </Link>
+        
 
         {/* Marketplace Icon */}
         <Link href="/marketplace">
