@@ -29,7 +29,15 @@ export const Navbar = () => {
           display: "flex",
         }}
       >
-        myCloset
+        <Link
+          href="/"
+          style={{
+            textDecoration: "none",
+            color: "black",
+          }}
+        >
+          myCloset
+        </Link>
       </div>
 
       {/* Navigation Links */}
