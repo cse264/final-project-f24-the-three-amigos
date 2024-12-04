@@ -9,7 +9,7 @@ const googleFontsLink = "https://fonts.googleapis.com/css2?family=Poppins:wght@4
 export const Topbody = () => {
   const containerStyle = {
     width: "100%",
-    height: "100vh",
+    height: "100%",
     backgroundImage: "url('/new-closetbackground.png')",
     backgroundSize: "cover",
     backgroundPosition: "center",
@@ -183,20 +183,6 @@ export const Topbody = () => {
             </div>
           </Link>
         </div>
-
-        {/* Outfit Frame Section */}
-        <div style={outfitFrameStyle}>
-          <img
-            src="/placeholder-outfit.jpg"
-            alt="Your Outfit"
-            style={placeholderImageStyle}
-          />
-        </div>
-
-        {/* Footer Section */}
-        <footer style={footerStyle}>
-          <p>© 2024 My Closet. All rights reserved.</p>
-        </footer>
       </div>
     </>
   );
