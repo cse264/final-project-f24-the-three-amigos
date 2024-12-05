@@ -2,10 +2,15 @@
 
 import { useEffect, useState } from 'react';
 import { Topbody } from "./Topbody";
+import { useRouter } from 'next/navigation';
 
 export default function Closet() {
+  const router = useRouter();
   const [shirt, setShirt] = useState(null);
   const [shoe, setShoe] = useState(null);
+  const [username, setUsername] = useState(router.query.username);
+  const [userType, setUserType] = useState(router.query.user_type);
+  const [userId, setUserId] = useState(router.query.user_id);
 
   useEffect(() => {
     fetchProducts();
