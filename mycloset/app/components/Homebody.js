@@ -1,15 +1,43 @@
 "use client";
 
 import React, { useState } from "react";
-import TextField from "@mui/material/TextField";
+import { useRouter } from 'next/navigation';
+import { TextField, Select, MenuItem } from "@mui/material";
 import Button from "@mui/material/Button";
 import Link from "next/link";
 
 export const Homebody = () => {
   const [username, setUsername] = useState("");
+  const [userType, setUserType] = useState("");
+  const router = useRouter();
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
+  };
+
+  const handleUserTypeChange = (e) => {
+    setUserType(e.target.value);
+  };
+
+  const handleContinue= async () => {
+    try{
+      if (username && userType) {
+        const response = await fetch('http://localhost:3000/api/users/1', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: username,
+            user_type: userType,
+          }),
+        });
+      } else {
+        alert("Please select a username and user type.");
+      }
+    }catch (err) {
+      console.log(err)
+    }
   };
 
   return (
@@ -99,9 +127,25 @@ export const Homebody = () => {
           }}
         />
 
+        {/* User Type Select */}
+        <Select
+          value={userType}
+          onChange={handleUserTypeChange}
+          fullWidth
+          variant="outlined"
+          style={{
+            marginBottom: "20px",
+            background: "#FFF",
+            borderRadius: "8px",
+            fontSize: "14px",
+          }}
+        >
+          <MenuItem value="free">Free User</MenuItem>
+          <MenuItem value="paid">Paid User</MenuItem>
+        </Select>
+
         {/* Continue Button */}
-        <Link href="/signin" passHref>
-          <Button
+        <Button
             variant="contained"
             style={{
               backgroundColor: "#6B705C",
@@ -115,6 +159,7 @@ export const Homebody = () => {
               boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.15)",
               transition: "transform 0.2s ease, box-shadow 0.2s ease",
             }}
+            onClick={handleContinue}
             onMouseEnter={(e) => {
               e.target.style.transform = "scale(1.05)";
               e.target.style.boxShadow = "0px 6px 24px rgba(0, 0, 0, 0.3)";
@@ -125,8 +170,7 @@ export const Homebody = () => {
             }}
           >
             Continue
-          </Button>
-        </Link>
+        </Button>
       </div>
 
       {/* Footer Section */}
