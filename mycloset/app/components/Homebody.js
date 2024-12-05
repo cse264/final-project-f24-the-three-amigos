@@ -9,6 +9,7 @@ import Link from "next/link";
 export const Homebody = () => {
   const [username, setUsername] = useState("");
   const [userType, setUserType] = useState("");
+  const [userId, setUserId] = useState(0)
   const router = useRouter();
 
   const handleUsernameChange = (event) => {
@@ -19,9 +20,11 @@ export const Homebody = () => {
     setUserType(e.target.value);
   };
 
-  const handleContinue= async () => {
+  const handleContinue = async () => {
     try{
       if (username && userType) {
+
+        //Posting new user
         const response = await fetch('http://localhost:3000/api/users/1', {
           method: 'POST',
           headers: {
@@ -32,6 +35,26 @@ export const Homebody = () => {
             user_type: userType,
           }),
         });
+
+        //Getting their id
+        const idResponse = await fetch(`http://localhost:3000/api/${username}`);
+        if (!idResponse.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await idResponse.json();
+        setUserId(data.user_id);
+
+        //Routing to closet
+        router.push({
+          pathname: '/closet',
+          query: {
+            username: username,
+            user_id: userId,
+            user_type: userType
+          }
+        });
+
+
       } else {
         alert("Please select a username and user type.");
       }
