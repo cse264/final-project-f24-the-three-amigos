@@ -12,88 +12,175 @@ export const Homebody = () => {
     setUsername(event.target.value);
   };
 
-  // const handleRegister = async () => {
-  //   try {
-  //     const response = await fetch("/api/users/1", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ username }),
-  //     });
-
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       console.log("User registered:", data);
-  //       // Use Link component for navigation to marketplace
-  //       document.getElementById("marketplace-link").click();
-  //     } else {
-  //       console.error("Failed to register user");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //   }
-  // };
-
   return (
     <div
       style={{
         width: "100%",
-        height: "100%",
-        paddingTop: 28,
-        paddingBottom: 28,
-        background: "#CCD5AE",
-        borderRadius: 10,
-        overflow: "hidden",
+        height: "100vh",
+        background: "linear-gradient(135deg, #CCD5AE, #FEFAE0)", // Smooth gradient
+        display: "flex",
         flexDirection: "column",
-        justifyContent: "flex-start",
+        justifyContent: "center",
         alignItems: "center",
-        gap: 25,
-        display: "inline-flex",
+        fontFamily: "'Poppins', sans-serif",
+        overflow: "hidden", // Prevent scrollbars
+        position: "relative",
       }}
     >
+      {/* Background Animation */}
       <div
         style={{
-          width: 592,
-          height: 71,
-          textAlign: "center",
-          color: "black",
-          fontSize: 32,
-          fontFamily: "Poppins",
-          fontWeight: "400",
-          wordWrap: "break-word",
+          position: "absolute",
+          top: "0",
+          left: "0",
+          width: "100%",
+          height: "100%",
+          background: "radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(0,0,0,0) 60%)",
+          zIndex: "0",
+          animation: "pulse 6s infinite",
         }}
-      >
-        Sign Up
-      </div>
-      <div
-        style={{
-          width: 331,
-          height: 40,
-          color: "black",
-          fontSize: 24,
-          fontFamily: "Poppins",
-          fontWeight: "400",
-          wordWrap: "break-word",
-        }}
-      >
-        Enter Username:
-      </div>
-      <TextField
-        label="Username"
-        variant="outlined"
-        fullWidth
-        value={username}
-        onChange={handleUsernameChange}
       />
-      {/* <Button
-        variant="contained"
-        color="primary"
-        onClick={handleRegister}
-        style={{ marginTop: 20 }}
+
+      {/* Card Container */}
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          maxWidth: "400px",
+          background: "rgba(255, 255, 255, 0.95)", // Slight transparency
+          borderRadius: "16px",
+          padding: "40px",
+          boxShadow: "0 8px 30px rgba(0, 0, 0, 0.15)",
+          textAlign: "center",
+          zIndex: "1",
+          animation: "fadeIn 1s ease",
+        }}
       >
-        Enter
-      </Button> */}
+        {/* Title */}
+        <h1
+          style={{
+            fontSize: "36px",
+            color: "#6B705C",
+            marginBottom: "20px",
+            fontWeight: "700",
+            textShadow: "0 2px 6px rgba(0, 0, 0, 0.15)",
+            letterSpacing: "1px",
+          }}
+        >
+          Welcome!
+        </h1>
+
+        {/* Subtitle */}
+        <p
+          style={{
+            fontSize: "16px",
+            color: "#555",
+            marginBottom: "30px",
+            fontWeight: "500",
+            lineHeight: "1.6",
+          }}
+        >
+          Create your account to access My Closet and manage your wardrobe like
+          a pro.
+        </p>
+
+        {/* Username Input */}
+        <TextField
+          label="Enter your username"
+          variant="outlined"
+          fullWidth
+          value={username}
+          onChange={handleUsernameChange}
+          style={{
+            marginBottom: "20px",
+            background: "#FFF",
+            borderRadius: "8px",
+            fontSize: "14px",
+          }}
+        />
+
+        {/* Continue Button */}
+        <Link href="/signin" passHref>
+          <Button
+            variant="contained"
+            style={{
+              backgroundColor: "#6B705C",
+              color: "#FFFFFF",
+              fontWeight: "700",
+              fontSize: "16px",
+              padding: "12px 24px",
+              borderRadius: "8px",
+              textTransform: "none",
+              width: "100%",
+              boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.15)",
+              transition: "transform 0.2s ease, box-shadow 0.2s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.transform = "scale(1.05)";
+              e.target.style.boxShadow = "0px 6px 24px rgba(0, 0, 0, 0.3)";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.transform = "scale(1)";
+              e.target.style.boxShadow = "0px 4px 20px rgba(0, 0, 0, 0.15)";
+            }}
+          >
+            Continue
+          </Button>
+        </Link>
+      </div>
+
+      {/* Footer Section */}
+      <div
+        style={{
+          marginTop: "20px",
+          color: "#333",
+          fontSize: "14px",
+          textAlign: "center",
+          zIndex: "1",
+        }}
+      >
+        Already have an account?{" "}
+        <Link href="/signin" passHref>
+          <span
+            style={{
+              color: "#6B705C",
+              fontWeight: "700",
+              cursor: "pointer",
+            }}
+          >
+            Sign In
+          </span>
+        </Link>
+      </div>
+
+      {/* Keyframe Animation */}
+      <style jsx>{`
+        @keyframes pulse {
+          0% {
+            transform: scale(1);
+            opacity: 0.9;
+          }
+          50% {
+            transform: scale(1.1);
+            opacity: 1;
+          }
+          100% {
+            transform: scale(1);
+            opacity: 0.9;
+          }
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </div>
   );
 };
