@@ -5,12 +5,15 @@ import { TextField, Select, MenuItem } from "@mui/material";
 import Button from "@mui/material/Button";
 import Link from "next/link";
 import { useUser } from '../context/userContext';
+import Signin from './Signin';
 
 import { useRouter } from 'next/navigation';
 
 export const Homebody = () => {
   const { username, setUsername, userType, setUserType, userId, setUserId } = useUser(); // Access context values 
   const router = useRouter();
+  const [showSignIn, setShowSignIn] = useState(false);
+
 
   const handleUsernameChange = async (event) => {
     setUsername(event.target.value);
@@ -199,18 +202,31 @@ export const Homebody = () => {
           zIndex: "1",
         }}
       >
-        Already have an account?{" "}
-        <Link href="/signin" passHref>
-          <span
-            style={{
-              color: "#6B705C",
-              fontWeight: "700",
-              cursor: "pointer",
-            }}
-          >
-            Sign In
-          </span>
-        </Link>
+
+        {/*Sign in Part */}
+        <div>
+          {!showSignIn ? (
+            <div>
+              <p>
+                Already have an account?{" "}
+                <span
+                  onClick={() => setShowSignIn(true)}
+                  style={{
+                    color: "#6B705C",
+                    fontWeight: "700",
+                    cursor: "pointer",
+                  }}
+                >
+                  Sign In
+                </span>
+              </p>
+            </div>
+          ) : (
+            <div>
+            <Signin/>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Keyframe Animation */}
