@@ -13,6 +13,7 @@ const Closet = () => {
       try {
         const response = await fetch(`http://localhost:3000/api/closets/${userId}`);
         const data = await response.json();
+        console.log(data)
         setProducts(data);
       } catch (error) {
         console.error(error);
@@ -54,8 +55,8 @@ const Closet = () => {
                 }}
               >
                 <img
-                  src={product.image} // Assuming the product object has images
-                  alt={product.title}
+                  src={product.image} 
+                  alt={product.item_name}
                   style={{
                     width: '100%',
                     height: '100%',
@@ -92,7 +93,7 @@ const Closet = () => {
                     wordWrap: 'break-word',
                   }}
                 >
-                  {product.title}
+                  {product.item_name}
                 </div>
                 <div
                   style={{
@@ -105,7 +106,7 @@ const Closet = () => {
                     wordWrap: 'break-word',
                   }}
                 >
-                  {product.type}
+                  {product.item_type}
                 </div>
                 <div
                   style={{
