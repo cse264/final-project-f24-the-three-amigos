@@ -69,6 +69,9 @@ MyCloset is a web application designed to help users organize and manage their w
   - A user-friendly interface optimized for desktop 
 - **REST API Integration:**
   - Fetch and display fashion inspiration from an external API.
+- **Database**
+  - We used mySQL as a database for this project, running a local instance. Connect to your local instance and set up two tables. One, my_closet_users, has columns user_id, username, and user_type. The other, closet_items, has columns user_id, item_id, item_name, item_type, image, and price. Put your credentials into an .env file and it should work.
+
 
 
 ---
