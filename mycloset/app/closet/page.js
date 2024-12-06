@@ -3,14 +3,13 @@
 import { useEffect, useState } from 'react';
 import { Topbody } from "./Topbody";
 import { useRouter } from 'next/navigation';
+import { UserProvider } from "../context/userContext";
 
 export default function Closet() {
   const router = useRouter();
   const [shirt, setShirt] = useState(null);
   const [shoe, setShoe] = useState(null);
-  const [username, setUsername] = useState(router.query.username);
-  const [userType, setUserType] = useState(router.query.user_type);
-  const [userId, setUserId] = useState(router.query.user_id);
+  const { username, setUsername, userType, setUserType, userId, setUserId } = useUser(); // Access context values 
 
   useEffect(() => {
     fetchProducts();
@@ -53,7 +52,7 @@ export default function Closet() {
   };
 
   return (
-    <div>
+    <UserProvider>
       <h1>User Closet</h1>
       <Topbody />
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px' }}>
@@ -117,6 +116,6 @@ export default function Closet() {
           </div>
         )}
       </div>
-    </div>
+    </UserProvider>
   );
 }

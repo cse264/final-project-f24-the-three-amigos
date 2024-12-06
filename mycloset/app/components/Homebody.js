@@ -1,18 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from 'next/navigation';
 import { TextField, Select, MenuItem } from "@mui/material";
 import Button from "@mui/material/Button";
 import Link from "next/link";
+import { useUser } from '../context/userContext';
+import { useRouter } from 'next/navigation';
 
 export const Homebody = () => {
-  const [username, setUsername] = useState("");
-  const [userType, setUserType] = useState("");
-  const [userId, setUserId] = useState(0)
+  const { username, setUsername, userType, setUserType, userId, setUserId } = useUser(); // Access context values 
   const router = useRouter();
 
-  const handleUsernameChange = (event) => {
+  const handleUsernameChange = async (event) => {
     setUsername(event.target.value);
   };
 
@@ -20,10 +19,9 @@ export const Homebody = () => {
     setUserType(e.target.value);
   };
 
-  const handleContinue = async () => {
+  const handleSignUp = async () => {
     try{
-      if (username && userType) {
-
+      if (userType && username) {
         //Posting new user
         const response = await fetch('http://localhost:3000/api/users/1', {
           method: 'POST',
@@ -37,23 +35,17 @@ export const Homebody = () => {
         });
 
         //Getting their id
-        const idResponse = await fetch(`http://localhost:3000/api/${username}`);
+        const idResponse = await fetch(`http://localhost:3000/api/${username}`,  {
+          method: "GET",
+        });
         if (!idResponse.ok) {
           throw new Error('Network response was not ok');
         }
         const data = await idResponse.json();
-        setUserId(data.user_id);
+        setUserId(data[0].user_id);
 
-        //Routing to closet
-        router.push({
-          pathname: '/closet',
-          query: {
-            username: username,
-            user_id: userId,
-            user_type: userType
-          }
-        });
-
+        //Route to closet
+        router.push('/closet');
 
       } else {
         alert("Please select a username and user type.");
@@ -167,7 +159,7 @@ export const Homebody = () => {
           <MenuItem value="paid">Paid User</MenuItem>
         </Select>
 
-        {/* Continue Button */}
+        {/* Sign Up Button */}
         <Button
             variant="contained"
             style={{
@@ -182,7 +174,7 @@ export const Homebody = () => {
               boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.15)",
               transition: "transform 0.2s ease, box-shadow 0.2s ease",
             }}
-            onClick={handleContinue}
+            onClick={handleSignUp}
             onMouseEnter={(e) => {
               e.target.style.transform = "scale(1.05)";
               e.target.style.boxShadow = "0px 6px 24px rgba(0, 0, 0, 0.3)";
@@ -192,7 +184,7 @@ export const Homebody = () => {
               e.target.style.boxShadow = "0px 4px 20px rgba(0, 0, 0, 0.15)";
             }}
           >
-            Continue
+            Sign Up
         </Button>
       </div>
 
