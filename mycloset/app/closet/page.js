@@ -6,6 +6,7 @@ import { useUser } from '../context/userContext';
 const Closet = () => {
   const [products, setProducts] = useState([]); // Assuming products will be 
   const { username, setUsername, userType, setUserType, userId, setUserId } = useUser();
+  const backgroundColor = userType === "paid" ? "#DDEFEA" : "#FEFAE0";
 
   useEffect(() => {
     // Fetch products from your API or data source
@@ -24,7 +25,14 @@ const Closet = () => {
   }, []);
 
   return (
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+      <div style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "20px",
+        backgroundColor: backgroundColor, // **Apply background color dynamically**
+        padding: "20px", // Optional padding for visual improvement
+        borderRadius: "10px", // Optional rounded corners for better design
+      }}>
         {products.length > 0 ? (
           products.map((product, index) => (
             <div
