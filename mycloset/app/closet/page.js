@@ -1,121 +1,158 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import { Topbody } from "./Topbody";
-import { useRouter } from 'next/navigation';
-import { UserProvider } from "../context/userContext";
+import React, { useState, useEffect } from 'react';
+import { useUser } from '../context/userContext';
 
-export default function Closet() {
-  const router = useRouter();
-  const [shirt, setShirt] = useState(null);
-  const [shoe, setShoe] = useState(null);
-  const { username, setUsername, userType, setUserType, userId, setUserId } = useUser(); // Access context values 
+const Closet = () => {
+  const [products, setProducts] = useState([]); // Assuming products will be 
+  const { username, setUsername, userType, setUserType, userId, setUserId } = useUser();
 
   useEffect(() => {
+    // Fetch products from your API or data source
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/api/closets/${userId}`);
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     fetchProducts();
   }, []);
 
-  const fetchProducts = async () => {
-    try {
-      const categories = ['mens-shoes', 'mens-shirts'];
-      const promises = categories.map(category => fetch(`https://dummyjson.com/products/category/${category}`).then(res => res.json()));
-      const results = await Promise.all(promises);
-      
-      const shoes = results[0].products;
-      const shirts = results[1].products;
-
-      setShoe(shoes[Math.floor(Math.random() * shoes.length)]);
-      setShirt(shirts[Math.floor(Math.random() * shirts.length)]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchNewShirt = async () => {
-    try {
-      const shirtsRes = await fetch('https://dummyjson.com/products/category/mens-shirts');
-      const shirts = await shirtsRes.json();
-      setShirt(shirts.products[Math.floor(Math.random() * shirts.products.length)]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchNewShoe = async () => {
-    try {
-      const shoesRes = await fetch('https://dummyjson.com/products/category/mens-shoes');
-      const shoes = await shoesRes.json();
-      setShoe(shoes.products[Math.floor(Math.random() * shoes.products.length)]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
-    <UserProvider>
-      <h1>User Closet</h1>
-      <Topbody />
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px' }}>
-        <h1>Random Clothing Item</h1>
-        {shirt && (
-          <div style={{ marginBottom: '20px', display: 'flex', alignItems: 'center' }}>
-            <button onClick={fetchNewShirt} style={{
-              marginRight: '20px',
-              width: '50px',
-              height: '50px',
-              borderRadius: '50%',
-              background: 'black',
-              color: 'white',
-              border: 'none',
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}>
-              Next Shirt
-            </button>
-            <img src={shirt.images[0]} alt={shirt.title} style={{ width: '300px', height: 'auto' }} />
-          </div>
-        )}
-        <div style={{ display: 'flex', alignItems: 'center', margin: '20px 0' }}>
-          <button style={{
-            marginRight: '20px',
-            width: '50px',
-            height: '50px',
-            borderRadius: '50%',
-            background: 'black',
-            color: 'white',
-            border: 'none',
-            cursor: 'not-allowed',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}>
-            Next Pants
-          </button>
-          <img src="https://i.ibb.co/QvV28SG/Stylish-jeans-pants-on-transparent-background-PNG.png" alt="Pants" style={{ width: '25%', height: '25%' }} />
-        </div>
-        {shoe && (
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <button onClick={fetchNewShoe} style={{
-              marginRight: '20px',
-              width: '50px',
-              height: '50px',
-              borderRadius: '50%',
-              background: 'black',
-              color: 'white',
-              border: 'none',
-              cursor: 'pointer',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}>
-              Next Shoe
-            </button>
-            <img src={shoe.images[0]} alt={shoe.title} style={{ width: '300px', height: 'auto' }} />
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+        {products.length > 0 ? (
+          products.map((product, index) => (
+            <div
+              key={index}
+              style={{
+                width: 250,
+                height: 435,
+                background: '#CCD5AE',
+                borderRadius: 30,
+                overflow: 'hidden',
+                flexDirection: 'column',
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+                gap: 72,
+                display: 'inline-flex',
+              }}
+            >
+              <div
+                style={{
+                  alignSelf: 'stretch',
+                  height: 170,
+                  textAlign: 'center',
+                  color: 'black',
+                  fontSize: 16,
+                  fontFamily: 'Poppins',
+                  fontWeight: '400',
+                  wordWrap: 'break-word',
+                }}
+              >
+                <img
+                  src={product.images[0]} // Assuming the product object has images
+                  alt={product.title}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                  }}
+                />
+              </div>
+              <div
+                style={{
+                  height: 170,
+                  paddingLeft: 12,
+                  paddingRight: 12,
+                  paddingTop: 5,
+                  paddingBottom: 5,
+                  background: '#FEFAE0',
+                  borderTopLeftRadius: 30,
+                  borderTopRightRadius: 30,
+                  overflow: 'hidden',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-start',
+                  alignItems: 'flex-start',
+                  gap: 20,
+                  display: 'flex',
+                }}
+              >
+                <div
+                  style={{
+                    alignSelf: 'stretch',
+                    height: 21,
+                    color: 'black',
+                    fontSize: 16,
+                    fontFamily: 'Poppins',
+                    fontWeight: '400',
+                    wordWrap: 'break-word',
+                  }}
+                >
+                  {product.title}
+                </div>
+                <div
+                  style={{
+                    alignSelf: 'stretch',
+                    height: 21,
+                    color: 'black',
+                    fontSize: 16,
+                    fontFamily: 'Poppins',
+                    fontWeight: '400',
+                    wordWrap: 'break-word',
+                  }}
+                >
+                  {product.type}
+                </div>
+                <div
+                  style={{
+                    alignSelf: 'stretch',
+                    height: 21,
+                    color: 'black',
+                    fontSize: 16,
+                    fontFamily: 'Poppins',
+                    fontWeight: '400',
+                    wordWrap: 'break-word',
+                  }}
+                >
+                  {`$${product.price}`}
+                </div>
+                <div
+                  style={{
+                    width: 218,
+                    height: 53,
+                    background: '#CCD5AE',
+                    borderRadius: 8,
+                    overflow: 'hidden',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    display: 'inline-flex',
+                  }}
+                >
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div
+            style={{
+              width: '100%',
+              textAlign: 'center',
+              color: 'black',
+              fontSize: 18,
+              fontFamily: 'Poppins',
+              fontWeight: '400',
+              padding: '20px',
+            }}
+          >
+            No products in your closet
           </div>
         )}
       </div>
-    </UserProvider>
   );
-}
+};
+
+export default Closet;

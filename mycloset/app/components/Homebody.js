@@ -5,6 +5,7 @@ import { TextField, Select, MenuItem } from "@mui/material";
 import Button from "@mui/material/Button";
 import Link from "next/link";
 import { useUser } from '../context/userContext';
+
 import { useRouter } from 'next/navigation';
 
 export const Homebody = () => {
@@ -42,8 +43,8 @@ export const Homebody = () => {
           throw new Error('Network response was not ok');
         }
         const data = await idResponse.json();
-        setUserId(data[0].user_id);
-
+        const id = data[0].user_id
+        setUserId(id);
         //Route to closet
         router.push('/closet');
 

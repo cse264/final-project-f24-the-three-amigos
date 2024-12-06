@@ -8,12 +8,7 @@ import Link from "next/link";
 
 
 export default function Home() {
-  return (
-    <UserProvider>
-    <div>
+  return(
       <Homebody/>
-      <Link href="/marketplace" style = {{color: 'black', textDecoration: 'none'}}>Log In</Link>
-    </div>
-    </UserProvider>
   );
 }
