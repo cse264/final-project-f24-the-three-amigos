@@ -28,3 +28,11 @@ Build your team and write a document describing your application to me by Monday
 * README describing your project, with all the information outlined above (team members, application name, description, etc). You will also include detailed instructions of how to install and run your application, and what API keys, databases, etc are needed to run your application.
 * Final Presentation and Demo
   * You will prepare a 5 minute presentation and demo of your application in class during the last week of classes
+ 
+
+
+### READ ME FOR PROJECT
+Team Members: Connor McDowell, Ethan Lowey, Ian Werner
+Application Name: myCloset
+Description:
+
