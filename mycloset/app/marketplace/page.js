@@ -2,9 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import Product from './components/Product'; // Make sure to import the Product component
+import { useUser } from '../context/userContext';
+
 
 export default function Marketplace() {
   const [products, setProducts] = useState([]);
+  const { username, setUsername, userType, setUserType, userId, setUserId } = useUser();
+
 
   useEffect(() => {
     const fetchProducts = async () => {

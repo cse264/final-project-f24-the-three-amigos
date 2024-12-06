@@ -1,9 +1,15 @@
+"use client"
+
 import React from 'react';
+import { useUser } from '../../context/userContext';
+
 
 const Product = ({ id, title, type, price, images }) => {
+  const { username, setUsername, userType, setUserType, userId, setUserId } = useUser();
+
   const addToCloset = async () => {
     try {
-      const response = await fetch(`/api/closet/${userId}`, {
+      const response = await fetch(`http://localhost:3000/api/closets/${userId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -15,10 +21,9 @@ const Product = ({ id, title, type, price, images }) => {
           price: price,
         }),
       });
-      const data = await response.json();
-      console.log('Added to closet:', data);
+      console.log(response)
     } catch (error) {
-      console.error('Error adding to closet:', error);
+      console.error( error);
     }
   };
 

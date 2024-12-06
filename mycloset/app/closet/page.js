@@ -54,7 +54,7 @@ const Closet = () => {
                 }}
               >
                 <img
-                  src={product.images[0]} // Assuming the product object has images
+                  src={product.image} // Assuming the product object has images
                   alt={product.title}
                   style={{
                     width: '100%',
