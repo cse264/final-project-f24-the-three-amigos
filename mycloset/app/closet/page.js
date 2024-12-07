@@ -34,10 +34,23 @@ const Closet = () => {
     setNewProduct({ ...newProduct, [name]: value });
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
+    try{
     if (newProduct.item_name && newProduct.item_type && newProduct.image && newProduct.price) {
       setProducts([...products, newProduct]);
+      const response = await fetch(`http://localhost:3000/api/closets/${userId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          item_name: newProduct.item_name,
+          item_type: newProduct.item_type,
+          image: newProduct.image, // Assuming you're using the first image
+          price: newProduct.price,
+        }),
+      });
       setNewProduct({
         item_name: '',
         item_type: '',
@@ -47,6 +60,9 @@ const Closet = () => {
       setIsFormVisible(false);
     } else {
       alert('Please fill out all fields.');
+    }
+    } catch (err) {
+      console.error(err);
     }
   };
 
